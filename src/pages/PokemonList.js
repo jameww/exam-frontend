@@ -16,7 +16,7 @@ const PokemonList = () => {
               src={pokeData[i - fNum]?.sprites?.other?.home?.front_default}
               alt={pokeData[i - fNum]?.name}
             />
-            <span className="name-box">{pokeData[i - fNum]?.id}</span>
+            <span className="name-box">{pokeData[i - fNum]?.name}</span>
           </>
         ) : (
           <>
