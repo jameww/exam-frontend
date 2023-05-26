@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import PokemonList from "./pages/PokemonList";
+import ExamData from "./pages/ExamData";
+
+const getBasename = () => {
+  return `${process.env.PUBLIC_URL.split("/").pop()}`;
+};
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter basename={getBasename()}>
+      <Routes>
+        <Route path="/" element={<Home />}>
+          <Route path="/" element={<PokemonList />} />
+          <Route path="/examdata" element={<ExamData />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
