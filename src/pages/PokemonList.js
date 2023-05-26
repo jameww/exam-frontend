@@ -76,9 +76,9 @@ const PokemonList = () => {
   };
 
   return (
-    <div className="container">
+    <>
       <div className="row g-3">{renderSkeleton()}</div>
-    </div>
+    </>
   );
 };
 
