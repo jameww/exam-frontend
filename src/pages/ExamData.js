@@ -5,9 +5,7 @@ function ExamData() {
     let totalWeight = 0;
 
     products.forEach((product) => {
-      if (!product.is_editable_price) {
-        totalWeight += product.weight;
-      }
+      totalWeight += product.weight;
     });
     return totalWeight;
   };

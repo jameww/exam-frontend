@@ -9,15 +9,14 @@ const PokemonList = () => {
   const skeletonElement = (i) => {
     return (
       <div className="col-2 poke-box" key={i}>
-        {!loading[i] ? (
+        {loading[i] === false ? (
           <>
             <img
               className="img-box"
-              src={pokeData[i - 1]?.sprites?.other?.home?.front_default}
-              alt={pokeData[i - 1]?.name}
-              style={{ height: "auto" }}
+              src={pokeData[i - fNum]?.sprites?.other?.home?.front_default}
+              alt={pokeData[i - fNum]?.name}
             />
-            <span className="name-box">{pokeData[i - 1]?.name}</span>
+            <span className="name-box">{pokeData[i - fNum]?.id}</span>
           </>
         ) : (
           <>
@@ -31,14 +30,16 @@ const PokemonList = () => {
 
   useEffect(() => {
     let abortController = new AbortController();
+    setPokeData([]);
+    setLoading({});
 
     const fetchPokemonList = async () => {
-      for (let i = fNum; i <= lNum; i++) {
+      for (let id = fNum; id <= lNum; id++) {
         setLoading((prevLoading) => ({
           ...prevLoading,
-          [i]: true,
+          [id]: true,
         }));
-        await fetchPokeData(i);
+        await fetchPokeData(id);
       }
     };
     const fetchPokeData = async (id) => {
@@ -55,18 +56,16 @@ const PokemonList = () => {
       } catch (error) {
         console.log(error);
       } finally {
-        setTimeout(() => {
-          setLoading((prevLoading) => ({
-            ...prevLoading,
-            [id]: false,
-          }));
-        }, 250);
+        setLoading((prevLoading) => ({
+          ...prevLoading,
+          [id]: false,
+        }));
       }
     };
     fetchPokemonList();
 
     return () => abortController.abort();
-  }, []);
+  }, [fNum, lNum]);
 
   const renderSkeleton = () => {
     let skeleton = [];
@@ -78,7 +77,7 @@ const PokemonList = () => {
 
   return (
     <div className="container">
-      <div className="row g-1">{renderSkeleton()}</div>
+      <div className="row g-3">{renderSkeleton()}</div>
     </div>
   );
 };
